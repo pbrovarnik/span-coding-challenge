@@ -22,7 +22,6 @@ function App() {
 
 	return (
 		<div className="app">
-			{/* <div className="cap" /> */}
 			<div className="progress-bars-wrapper">
 				<div className="progress-bars">
 					{allBars.map((id, idx) => {

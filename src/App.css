@@ -1,0 +1,69 @@
+.app {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: white;
+}
+
+.progress-bars-wrapper {
+	width: 100%;
+	max-width: 800px;
+	padding: 20px;
+	border-radius: 6px;
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 4px;
+	border: 1px solid rgb(228, 228, 231);
+}
+
+.progress-bars {
+	display: flex;
+	flex-direction: column;
+	row-gap: 12px;
+}
+
+.progress-bar-wrapper {
+}
+
+.progress-bar-container {
+	height: 10px;
+	width: 100%;
+	background-color: #f4f4f5;
+	margin-bottom: 8px;
+	border-radius: 6px;
+}
+
+.progress-bar {
+	background-color: #18181b;
+	height: 100%;
+	border-radius: 6px;
+}
+
+.bar-btn {
+	border-radius: 6px;
+	color: #fafafa;
+	font-size: 14px;
+	border: unset;
+}
+
+.add-bar-btn {
+	width: 100%;
+	background-color: #18181b;
+	padding: 8px 16px;
+
+	&:hover {
+		background-color: #18181be6;
+	}
+}
+
+.delete-bar-btn {
+	color: #18181b;
+	border: 1px solid #e4e4e7;
+	background-color: white;
+	padding: 6px 14px;
+
+	&:hover {
+		border-color: #18181b;
+	}
+}

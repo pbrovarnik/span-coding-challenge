@@ -23,31 +23,35 @@ function App() {
 	return (
 		<div className="app">
 			<div className="progress-bars-wrapper">
-				<div className="progress-bars">
-					{allBars.map((id, idx) => {
-						return (
-							<ProgressBar
-								key={id}
-								active={idx === activeIdx}
-								onEnd={onEndProgressBar}
-								onDelete={() => {
-									onDeleteProgressBar(id);
-									if (idx <= activeIdx) {
-										setActiveIdx((prev) => (prev === 0 ? 0 : prev - 1));
-									}
-								}}
-							/>
-						);
-					})}
-				</div>
-				<button
+				{allBars.length > 0 && (
+					<div className="progress-bars">
+						{allBars.map((id, idx) => {
+							return (
+								<ProgressBar
+									key={id}
+									active={idx === activeIdx}
+									onEnd={onEndProgressBar}
+									onDelete={() => {
+										onDeleteProgressBar(id);
+										if (idx <= activeIdx) {
+											setActiveIdx((prev) => (prev === 0 ? 0 : prev - 1));
+										}
+									}}
+								/>
+							);
+						})}
+					</div>
+				)}
+				<div
 					style={{
-						marginTop: allBars.length > 0 ? '20px' : '',
+						borderTopLeftRadius: allBars.length > 0 ? '' : '6px',
+						borderTopRightRadius: allBars.length > 0 ? '' : '6px',
 					}}
-					className="bar-btn add-bar-btn"
-					onClick={onAddProgressBar}>
-					Add Bar
-				</button>
+					className="add-btn-container">
+					<button className="bar-btn add-bar-btn" onClick={onAddProgressBar}>
+						Add Bar
+					</button>
+				</div>
 			</div>
 		</div>
 	);
@@ -61,6 +65,7 @@ type ProgressBarProps = {
 
 function ProgressBar({ onDelete, onEnd, active }: ProgressBarProps) {
 	const [timer, setTime] = useState(0);
+	const [isFinished, setIsTimerFinished] = useState(false);
 	const percentage = (timer / DURATION) * 100;
 	const intervalIdRef = useRef<number>();
 
@@ -70,10 +75,10 @@ function ProgressBar({ onDelete, onEnd, active }: ProgressBarProps) {
 				setTime((prev) => {
 					if (prev >= DURATION) {
 						clearInterval(intervalIdRef.current);
-						onEnd();
+						setIsTimerFinished(true);
+
 						return DURATION;
 					}
-
 					return prev + 10;
 				});
 			}, 10);
@@ -82,7 +87,12 @@ function ProgressBar({ onDelete, onEnd, active }: ProgressBarProps) {
 		return () => {
 			clearInterval(intervalIdRef.current);
 		};
-	}, [active, onEnd]);
+	}, [active]);
+
+	useEffect(() => {
+		if (isFinished) onEnd();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isFinished]);
 
 	const onDeleteProgressBar = () => {
 		clearInterval(intervalIdRef.current);
